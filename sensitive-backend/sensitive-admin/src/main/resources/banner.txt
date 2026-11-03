@@ -1,0 +1,2 @@
+Application Version: ${sensitive.version}
+Spring Boot Version: ${spring-boot.version}

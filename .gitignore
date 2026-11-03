@@ -1,0 +1,47 @@
+######################################################################
+# Build outputs
+
+target/
+dist/
+build/
+.gradle/
+
+######################################################################
+# Node / frontend
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+######################################################################
+# Local runtime data
+
+*.log
+*.pid
+*.swp
+.DS_Store
+sensitive-backend/sql/backup/
+
+######################################################################
+# IDE / editor
+
+.claude/
+.idea/
+.vscode/
+*.iws
+*.iml
+*.ipr
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
+
+######################################################################
+# Test / coverage
+
+coverage/
+tests/**/coverage/
+tests/e2e/reports/
+selenium-debug.log

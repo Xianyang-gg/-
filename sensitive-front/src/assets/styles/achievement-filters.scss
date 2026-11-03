@@ -1,0 +1,92 @@
+.achievement-filters {
+  container: achievement-filters / inline-size;
+
+  .filter-fields {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px 24px;
+    align-items: start;
+  }
+
+  :deep(.el-form-item) {
+    min-width: 0;
+    margin: 0;
+  }
+
+  :deep(.el-form-item__label) {
+    height: auto;
+    margin-bottom: 8px;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--el-text-color-regular);
+  }
+
+  :deep(.el-form-item__content) {
+    min-width: 0;
+  }
+
+  :deep(.el-input), :deep(.el-select), :deep(.el-date-editor) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+    min-height: 36px;
+    border-radius: 6px;
+  }
+
+  .filter-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    :deep(.el-input-number) {
+      flex: 1;
+      width: 0;
+      min-width: 0;
+    }
+
+    > span {
+      flex: none;
+      font-size: 12px;
+      color: var(--el-text-color-secondary);
+    }
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--el-border-color-lighter);
+
+    :deep(.el-button) {
+      min-width: 80px;
+      height: 36px;
+      margin: 0;
+      border-radius: 6px;
+    }
+  }
+}
+
+@container achievement-filters (max-width: 1100px) {
+  .achievement-filters .filter-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container achievement-filters (max-width: 820px) {
+  .achievement-filters .filter-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container achievement-filters (max-width: 540px) {
+  .achievement-filters .filter-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

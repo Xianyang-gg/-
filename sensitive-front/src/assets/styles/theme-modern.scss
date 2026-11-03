@@ -1,0 +1,172 @@
+/**
+ * 现代浅色主题 · 全局视觉令牌与组件精修
+ * ----------------------------------------------------
+ * 目标：圆角、柔和阴影、留白、卡片化，让整体更现代轻盈。
+ * 原则：只在「外观层」(圆角/阴影/间距/配色) 增强，不改动任何布局结构、
+ *      尺寸与交互逻辑；暗色模式沿用 element-plus / 既有 html.dark 变量。
+ */
+
+/* ============ 设计令牌 ============ */
+:root {
+  /* 全局圆角（element-plus 基础令牌，按钮/输入等自动跟随） */
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+
+  --app-radius-card: 12px;
+  --app-radius-lg: 16px;
+
+  /* 柔和阴影 */
+  --app-shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --app-shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --app-shadow-md: 0 6px 16px rgba(16, 24, 40, 0.08), 0 2px 6px rgba(16, 24, 40, 0.05);
+  --app-shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.12), 0 4px 12px rgba(16, 24, 40, 0.06);
+
+  /* 内容画布底色（浅灰，衬托白色卡片） */
+  --app-canvas-bg: #f3f5f9;
+
+  /* 轻奢浅色布局令牌 */
+  --app-shell-bg: #f5f7fb;
+  --app-sidebar-bg: #ffffff;
+  --app-sidebar-border: #e8edf5;
+  --app-sidebar-text: #3f4a5f;
+  --app-sidebar-muted: #7a8699;
+  --app-sidebar-hover-bg: #f4f7fc;
+  --app-sidebar-active-bg: color-mix(in srgb, var(--current-color, #409eff) 12%, #ffffff 88%);
+  --app-sidebar-active-bg-end: rgba(255, 255, 255, 0.96);
+  --app-sidebar-active-border: color-mix(in srgb, var(--current-color, #409eff) 34%, #ffffff 66%);
+  --app-sidebar-shadow: 8px 0 24px rgba(22, 34, 51, 0.05);
+  --app-navbar-bg: rgba(255, 255, 255, 0.92);
+  --app-navbar-border: #edf1f7;
+  --app-toolbar-hover: #f3f6fb;
+  --app-tags-bg: rgba(255, 255, 255, 0.86);
+  --app-tags-active-mix: #ffffff;
+}
+
+html.dark {
+  --app-canvas-bg: var(--el-bg-color);
+  --app-shell-bg: var(--el-bg-color);
+  --app-sidebar-bg: var(--el-bg-color);
+  --app-sidebar-border: var(--el-border-color);
+  --app-sidebar-text: var(--el-text-color-regular);
+  --app-sidebar-muted: var(--el-text-color-secondary);
+  --app-sidebar-hover-bg: var(--el-bg-color-overlay);
+  --app-sidebar-active-bg: color-mix(in srgb, var(--current-color, #409eff) 22%, var(--el-bg-color-overlay) 78%);
+  --app-sidebar-active-bg-end: color-mix(in srgb, var(--current-color, #409eff) 12%, var(--el-bg-color) 88%);
+  --app-sidebar-active-border: color-mix(in srgb, var(--current-color, #409eff) 30%, var(--el-bg-color-overlay) 70%);
+  --app-sidebar-shadow: none;
+  --app-navbar-bg: rgba(20, 20, 20, 0.92);
+  --app-navbar-border: var(--el-border-color);
+  --app-toolbar-hover: var(--el-bg-color-overlay);
+  --app-tags-bg: var(--el-bg-color);
+  --app-tags-active-mix: var(--el-bg-color-overlay);
+}
+
+/* ============ 内容画布 + 页面卡片化 ============ */
+/* 给滚动容器一层浅灰画布，让每个页面的 .app-container 浮起为白色卡片 */
+.app-main {
+  background: var(--app-shell-bg, var(--app-canvas-bg));
+}
+
+.app-container {
+  margin: 16px;
+  padding: 18px 20px;
+  background: var(--el-bg-color, #ffffff);
+  border-radius: var(--app-radius-card);
+  box-shadow: var(--app-shadow-sm);
+}
+html.dark .app-container {
+  box-shadow: none;
+  border: 1px solid var(--el-border-color);
+}
+
+/* ============ 卡片 ============ */
+.el-card {
+  border: none;
+  border-radius: var(--app-radius-card);
+  box-shadow: var(--app-shadow-sm);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.el-card.is-hover-shadow:hover {
+  box-shadow: var(--app-shadow-md);
+}
+.el-card__header {
+  border-bottom: 1px solid var(--el-border-color-lighter);
+  font-weight: 600;
+}
+
+/* ============ 按钮 ============ */
+.el-button {
+  border-radius: 8px;
+  font-weight: 500;
+}
+.el-button--large { border-radius: 10px; }
+.el-button--small { border-radius: 7px; }
+.el-button.is-circle { border-radius: 50%; }
+
+/* ============ 输入 / 选择 / 数字 ============ */
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper {
+  border-radius: 8px !important;
+}
+
+/* ============ 弹窗 ============ */
+.el-dialog {
+  border-radius: var(--app-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--app-shadow-lg);
+}
+.el-dialog:not(.is-fullscreen) .el-dialog__header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+  font-weight: 600;
+}
+.el-drawer__header {
+  font-weight: 600;
+}
+
+/* ============ 弹层 / 消息盒 ============ */
+.el-popper,
+.el-dropdown__popper,
+.el-select__popper,
+.el-picker__popper {
+  border-radius: 10px !important;
+}
+.el-message-box { border-radius: 12px; }
+.el-message { border-radius: 10px; }
+
+/* ============ 表格 ============ */
+.el-table th.el-table__cell {
+  background: #f6f8fc;
+  font-weight: 600;
+}
+html.dark .el-table th.el-table__cell {
+  background: var(--el-bg-color-overlay);
+}
+.el-table {
+  --el-table-row-hover-bg-color: var(--el-color-primary-light-9, #f2f7ff);
+}
+
+/* ============ 标签 / 分页 ============ */
+.el-tag { border-radius: 6px; }
+.pagination-container { margin-top: 18px; }
+
+/* ============ 顶部导航栏 ============ */
+.navbar {
+  box-shadow: none;
+  border-bottom: 1px solid var(--app-navbar-border, var(--el-border-color-lighter));
+}
+
+/* ============ 侧边栏（浅色主题精修） ============ */
+.sidebar-container.theme-light {
+  background: var(--app-sidebar-bg) !important;
+  border-right: 1px solid var(--app-sidebar-border) !important;
+  box-shadow: var(--app-sidebar-shadow);
+}
+
+/* 折叠态弹出子菜单也跟随圆角 */
+.el-menu--vertical > .el-menu--popup,
+.el-menu--horizontal .el-menu--popup {
+  border-radius: 10px !important;
+  box-shadow: var(--app-shadow-md) !important;
+}

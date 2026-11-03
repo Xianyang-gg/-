@@ -1,0 +1,89 @@
+import request from '@/utils/request'
+
+// 查询${functionName}列表
+export function list${BusinessName}(query) {
+  return request({
+    url: '/${moduleName}/${businessName}/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询${functionName}详细
+export function get${BusinessName}(${pkColumn.javaField}) {
+  return request({
+    url: '/${moduleName}/${businessName}/' + ${pkColumn.javaField},
+    method: 'get'
+  })
+}
+
+// 新增${functionName}
+export function add${BusinessName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改${functionName}
+export function update${BusinessName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除${functionName}
+export function del${BusinessName}(${pkColumn.javaField}) {
+  return request({
+    url: '/${moduleName}/${businessName}/' + ${pkColumn.javaField},
+    method: 'delete'
+  })
+}
+#if($table.subDetail)
+
+// 查询${subTable.functionName}列表
+export function listSub${subClassName}(query) {
+  return request({
+    url: '/${moduleName}/${businessName}/list${subClassName}',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询${subTable.functionName}详细
+export function getSub${subClassName}(${subTable.pkColumn.javaField}) {
+  return request({
+    url: '/${moduleName}/${businessName}/get${subClassName}/' + ${subTable.pkColumn.javaField},
+    method: 'get'
+  })
+}
+
+// 新增${subTable.functionName}
+export function addSub${subClassName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}/${subclassName}',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改${subTable.functionName}
+export function updateSub${subClassName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}/${subclassName}',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除${subTable.functionName}
+export function delSub${subClassName}(${subTable.pkColumn.javaField}) {
+  return request({
+    url: '/${moduleName}/${businessName}/${subclassName}/' + ${subTable.pkColumn.javaField},
+    method: 'delete'
+  })
+}
+#end
