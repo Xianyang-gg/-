@@ -179,7 +179,7 @@ public class AchievementExport {
             SysRole r=new SysRole();r.setRoleKey(role.get("role_key").toString());r.setStatus("0");roles.add(r);
         }
         user.setRoles(roles);
-        if(id!=1 && roles.stream().noneMatch(r->"admin".equals(r.getRoleKey())) && service.rows("SELECT 1 FROM sys_user_role ur JOIN sys_role r ON r.role_id=ur.role_id "
+        if(id!=1 && roles.stream().noneMatch(r->AchievementAccess.ADMIN_ROLES.contains(r.getRoleKey())) && service.rows("SELECT 1 FROM sys_user_role ur JOIN sys_role r ON r.role_id=ur.role_id "
             +"JOIN sys_role_menu rm ON rm.role_id=r.role_id JOIN sys_menu m ON m.menu_id=rm.menu_id WHERE ur.user_id=? AND r.status='0' AND r.del_flag='0' AND m.status='0' AND m.perms IN ('achievement:list','*:*:*') LIMIT 1",id).isEmpty())
             throw new ServiceException("成果访问权限已撤销，无法生成导出",403);
         var context=SecurityContextHolder.createEmptyContext();

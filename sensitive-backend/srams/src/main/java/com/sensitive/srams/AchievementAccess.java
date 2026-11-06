@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 /** 业务数据范围独立于菜单权限；参与人只读，不获得编辑权。 */
 @Component
 public class AchievementAccess {
+    /** 管理员（admin1）与超级管理员拥有相同的成果管理权限。 */
+    public static final Set<String> ADMIN_ROLES = Set.of("admin","admin1");
     public long userId() { return SecurityUtils.getUserId(); }
     public boolean admin() {
         return SecurityUtils.isAdmin() || SecurityUtils.getLoginUser().getUser().getRoles().stream()
-            .anyMatch(r -> "admin".equals(r.getRoleKey()) && "0".equals(r.getStatus()));
+            .anyMatch(r -> ADMIN_ROLES.contains(r.getRoleKey()) && "0".equals(r.getStatus()));
     }
     public boolean collegeRead() {
         return admin() || SecurityUtils.getLoginUser().getUser().getRoles().stream()

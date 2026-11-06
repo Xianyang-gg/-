@@ -4,7 +4,7 @@
       <div><p>{{ category.group }}</p><h2>{{ category.label }}</h2></div>
       <div class="heading-actions">
         <el-button @click="openProfile">教师资料与证书</el-button>
-        <el-button @click="openCenter">成果总览与导出</el-button>
+        <el-button @click="openCenter">导出</el-button>
         <el-button v-if="metadata.canCreate" type="primary" @click="openCreate">{{ isProject ? '新增项目' : '新增记录' }}</el-button>
       </div>
     </div>
@@ -188,7 +188,7 @@ async function submitSort() { saving.value = true; try { await props.api.sort(so
 async function exportData(type) {
   if (exporting.value) return
   exporting.value = true
-  try { const params = selected.value.length ? { ...filter(), ids: selected.value.map(row => row.id) } : filter(); const result = await props.api.export(Number(type), params); trackAchievementExport(result.data.id); proxy.$modal.msgSuccess('已加入导出队列，完成后会提示前往“成果总览与导出”下载') }
+  try { const params = selected.value.length ? { ...filter(), ids: selected.value.map(row => row.id) } : filter(); const result = await props.api.export(Number(type), params); trackAchievementExport(result.data.id); proxy.$modal.msgSuccess('已加入导出队列，完成后会提示前往“导出”下载') }
   finally { exporting.value = false }
 }
 async function recognizeFile(options) {

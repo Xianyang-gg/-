@@ -15,7 +15,7 @@ function schedule(delay = 3000) {
 async function offerDownload(task, currentSession) {
   if (currentSession !== session || !userStore.token) return
   try {
-    await ElMessageBox.confirm(`导出任务 #${task.id} 已完成，是否前往“成果总览与导出”页面下载文件？`, '导出完成', {
+    await ElMessageBox.confirm(`导出任务 #${task.id} 已完成，是否前往“导出”页面下载文件？`, '导出完成', {
       confirmButtonText: '前往导出任务',
       cancelButtonText: '留在本页',
       type: 'success',

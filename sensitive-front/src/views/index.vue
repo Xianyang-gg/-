@@ -1,7 +1,7 @@
 <template>
   <div class="app-container home">
     <section v-if="hasAchievementPermission" id="teacher-center" class="teacher-center-card">
-      <h2>成果总览与导出</h2>
+      <h2>导出</h2>
       <AchievementExport />
     </section>
     <el-empty v-else description="暂无可用的业务功能" />

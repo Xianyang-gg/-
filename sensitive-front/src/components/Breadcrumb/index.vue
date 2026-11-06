@@ -34,7 +34,7 @@ function getBreadcrumb() {
   }
   // 判断是否为首页
   if (!isDashboard(matched[0])) {
-    matched = [{ path: "/index", meta: { title: "成果总览与导出" } }].concat(matched)
+    matched = [{ path: "/index", meta: { title: "导出" } }].concat(matched)
   }
   levelList.value = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
 }

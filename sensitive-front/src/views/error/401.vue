@@ -13,7 +13,7 @@
         <ul class="list-unstyled">
           <li class="link-type">
             <router-link to="/">
-              返回成果总览与导出
+              返回导出
             </router-link>
           </li>
         </ul>

@@ -70,7 +70,7 @@ public class AchievementService {
     }
     public static boolean summary(Map<String,?> params) { return "summary".equals(text(params.get("scope"))); }
     record Filter(String where, List<Object> args) {}
-    private Filter filter(Map<String,?> params) {
+    Filter filter(Map<String,?> params) {
         StringBuilder sql=new StringBuilder(" WHERE a.deleted=0");
         List<Object> args=new ArrayList<>();
         if(!access.collegeRead()) {
@@ -348,8 +348,21 @@ public class AchievementService {
     @Transactional(rollbackFor=Exception.class)
     public void delete(List<Long> ids) {
         if(ids.isEmpty()) throw new ServiceException("请选择成果");
-        for(long id:ids) access.requireEdit(readable(id));
-        for(long id:ids){db.update("UPDATE zs_achievement SET deleted=1 WHERE id=?",id);audit("delete","achievement",id,"");}
+        Map<Long,Map<String,Object>> records=new LinkedHashMap<>();
+        for(long id:ids.stream().distinct().sorted().toList()) {
+            one("SELECT id FROM zs_achievement WHERE id=? AND deleted=0 FOR UPDATE",id);
+            Map<String,Object> row=readable(id);access.requireEdit(row);records.put(id,row);
+        }
+        for(var entry:records.entrySet()) {
+            long id=entry.getKey();Map<String,Object> row=entry.getValue();
+            AchievementCatalog.Category category=AchievementCatalog.get(text(row.get("category_code")));
+            db.update("DELETE FROM "+category.table()+" WHERE achievement_id=?",id);
+            db.update("DELETE FROM zs_achievement_member WHERE achievement_id=?",id);
+            db.update("DELETE FROM zs_achievement_sort WHERE achievement_id=?",id);
+            db.update("DELETE FROM zs_attachment WHERE achievement_id=?",id);
+            db.update("DELETE FROM zs_achievement WHERE id=?",id);
+            audit("delete","achievement",id,text(row.get("name")));
+        }
     }
     @Transactional(rollbackFor=Exception.class)
     public void sort(String category,List<Long> ids) {
